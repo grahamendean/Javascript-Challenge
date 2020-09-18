@@ -14,22 +14,25 @@ function showTable(jsData) {
 };
 
 showTable(data);
+
+//create a click on "Filter Table"
     
 var button = d3.select('button');
 var input = d3.select('input');
-
-button.on('click', handleFilter);
-
-function handleFilter() {
-    d3.event.preventDefault();
-
-    var filterData = data;
-    var value = input.property('value');
+//clicking function
+button.on('click', function() {
     tbody.html('');
-
-    if(value) {
-        filterData.filter(obj => obj.datetime === value)
-    };
-
-    showTable(filterData);
-};
+    var date_time = d3.select("#datetime");
+    var value = date_time.property('value');
+    var filterData = data.filter(obj => obj.datetime === value);
+    console.log(filterData)
+//filter the data 
+    filterData.forEach(function(text_input) {
+        var row = tbody.append("tr");
+        Object.entries(text_input).forEach(function([key, value]) {
+            console.log(key,value);
+            var cell = row.append("td");
+            cell.text(value);
+        })
+    })
+});
